@@ -26,12 +26,19 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import Button from "primevue/button"
 import { formatStarWarsDate } from '@/helpers/dates';
+import { useToast } from 'primevue/usetoast';
 
 const peopleStore = usePeopleStore()
 const router = useRouter()
+const toast = useToast();
 
 onMounted(() => {
-  peopleStore.loadPeople()
+  try {
+    peopleStore.loadPeople()
+  } catch (error) {
+    
+    toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar las personas', life: 3000 });
+  }
 })
 
 function goToDetail(index: number) {

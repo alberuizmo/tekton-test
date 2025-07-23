@@ -7,6 +7,7 @@ import { setActivePinia, createPinia } from "pinia";
 import { createRouter, createMemoryHistory } from "vue-router";
 import { PeopleRoutes } from "@/router/routes";
 import PrimeVue from "primevue/config";
+import ToastService from 'primevue/toastservice';
 
 const mockResponse = {
     name: "Luke Skywalker",
@@ -45,7 +46,7 @@ describe("PeopleDetailPage", async() => {
     setActivePinia(createPinia());
     wrapper = mount(PeopleDetailPage, {
       global: {
-        plugins: [router, PrimeVue],
+        plugins: [router, PrimeVue, ToastService],
       },
     });
   });

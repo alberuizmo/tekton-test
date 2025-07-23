@@ -65,13 +65,19 @@ import { usePeopleStore } from '@/store/peopleStore'
 import Card from 'primevue/card'
 import Tag from 'primevue/tag'
 import { formatStarWarsDate } from '@/helpers/dates'
+import { useToast } from 'primevue/usetoast';
 
+const toast = useToast();
 const route = useRoute()
 const peopleStore = usePeopleStore()
 const person = computed(() => peopleStore.selectedPerson)
 
-onMounted(() => {
-  peopleStore.loadPerson(Number(route.params.id))
+onMounted(async() => {
+  try {
+    await peopleStore.loadPerson(Number(route.params.id));
+  } catch (error) {
+    toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar la persona', life: 3000 }); 
+  }
 })
 
 function extractIdFromUrl(url: string, type: string): string {

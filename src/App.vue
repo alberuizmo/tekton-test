@@ -1,11 +1,14 @@
 <template>
-  <div id="app">    
-    <router-view/>    
-  </div><LoadingOverlay/>
+  <div id="app">
+    <router-view />
+  </div>
+  <LoadingOverlay />
+  <Toast />
 </template>
 
 <script lang="ts" setup>
 import LoadingOverlay from '@/commons/LoadingOverlay.vue'
+import Toast from 'primevue/toast';
 </script>
 
 <style scoped lang="scss">

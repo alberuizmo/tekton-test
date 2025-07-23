@@ -8,6 +8,7 @@ import { createRouter, createMemoryHistory } from "vue-router";
 import { PeopleRoutes } from "@/router/routes";
 import PrimeVue from "primevue/config";
 import { formatStarWarsDate } from "@/helpers/dates";
+import ToastService from 'primevue/toastservice';
 
 const mockResponse = [
   {
@@ -44,7 +45,7 @@ describe("PeopleListPage", () => {
     setActivePinia(createPinia());
     wrapper = mount(PeopleListPage, {
       global: {
-        plugins: [router, PrimeVue],
+        plugins: [router, PrimeVue, ToastService],
       },
     });
   });
