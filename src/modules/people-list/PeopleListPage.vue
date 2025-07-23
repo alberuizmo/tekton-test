@@ -1,26 +1,16 @@
 <template>
   <div>
     <h1>Listado de Personas</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Año de nacimiento</th>
-          <th>Género</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(person, index) in peopleStore.people" :key="person.name">
-          <td>{{ person.name }}</td>
-          <td>{{ person.birth_year }}</td>
-          <td>{{ person.gender }}</td>
-          <td>
-            <button @click="goToDetail(index)">Ver detalle</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <DataTable :value="peopleStore.people" stripedRows tableStyle="min-width: 50rem" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]">
+      <Column field="name" header="Nombre"></Column>
+      <Column field="birth_year" header="Año de nacimiento"></Column>
+      <Column field="gender" header="Género"></Column>
+      <Column header="Acciones">
+        <template #body="{ index }">
+          <Button label="Ver detalle" @click="goToDetail(index+1)" />
+        </template>
+      </Column>
+    </DataTable>
   </div>
 </template>
 
@@ -28,6 +18,9 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { usePeopleStore } from '@/store/peopleStore'
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+
 
 const peopleStore = usePeopleStore()
 const router = useRouter()

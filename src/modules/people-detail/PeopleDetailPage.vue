@@ -1,29 +1,86 @@
 <template>
-  <div v-if="person">
-    <h1>{{ person.name }}</h1>
-    <p><strong>Género:</strong> {{ person.gender }}</p>
-    <p><strong>Películas:</strong></p>
-    <ul>
-      <li v-for="film in person.films" :key="film">{{ film }}</li>
-    </ul>
-    <p><strong>Especies:</strong></p>
-    <ul>
-      <li v-for="species in person.species" :key="species">{{ species }}</li>
-    </ul>
+  <div class="p-4">
+    <Card v-if="person" class="p-shadow-4">
+      <template #title>
+        {{ person.name }}
+      </template>
+
+      <template #content>
+        <div class="p-mb-3"><strong>Género:</strong>
+          <Tag :value="person.gender" />
+        </div>
+
+        <div v-if="person.films.length">
+          <h3>Películas</h3>
+          <ul class="p-pl-3">
+            <li v-for="film in person.films" :key="film">
+              <a class="link-styled" :href="film" target="_blank">
+                {{ extractIdFromUrl(film, 'films') }}
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="person.species.length">
+          <h3>Especies</h3>
+          <ul class="p-pl-3">
+            <li v-for="species in person.species" :key="species"><a class="link-styled" :href="species"
+                target="_blank">{{ extractIdFromUrl(species, 'species') }}</a></li>
+          </ul>
+        </div>
+
+        <div v-if="person.vehicles.length">
+          <h3>Vehículos</h3>
+          <ul class="p-pl-3">
+            <li v-for="vehicle in person.vehicles" :key="vehicle"><a class="link-styled" :href="vehicle"
+                target="_blank">{{ extractIdFromUrl(vehicle, 'vehicles') }}</a></li>
+          </ul>
+        </div>
+
+        <div v-if="person.starships.length">
+          <h3>Naves espaciales</h3>
+          <ul class="p-pl-3">
+            <li v-for="starship in person.starships" :key="starship"><a class="link-styled" :href="starship"
+                target="_blank">{{ extractIdFromUrl(starship, 'starships') }}</a></li>
+          </ul>
+        </div>
+      </template>
+    </Card>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { usePeopleStore } from '@/store/peopleStore'
+import Card from 'primevue/card'
+import Tag from 'primevue/tag'
 
 const route = useRoute()
 const peopleStore = usePeopleStore()
+const person = computed(() => peopleStore.selectedPerson)
 
 onMounted(() => {
   peopleStore.loadPerson(Number(route.params.id))
 })
 
-const person = peopleStore.selectedPerson
+function extractIdFromUrl(url: string, type: string): string {
+  const parts = url.split(`${type}/`)
+  return parts.length > 1 ? `${type} #${parts[1].replace('/', '')}` : url
+}
 </script>
+
+<style scoped>
+h3 {
+  margin-top: 1rem;
+}
+
+.link-styled {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.link-styled:hover {
+  text-decoration: underline;
+}
+</style>

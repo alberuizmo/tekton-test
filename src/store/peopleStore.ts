@@ -10,7 +10,8 @@ export const usePeopleStore = defineStore('people', {
   }),
 
   actions: {
-    async loadPeople() {
+    async loadPeople() {      
+      if(this.people.length > 0) return
       this.loading = true
       this.people = await fetchPeople()
       this.loading = false

@@ -1,12 +1,10 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div id="app">    
+    <router-view/>
   </div>
 </template>
 
-<script lang="ts" setup>
-// No es necesario código aquí si solo usas router-view
-</script>
+<script lang="ts" setup></script>
 
 <style scoped lang="scss">
 #app {
