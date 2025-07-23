@@ -20,7 +20,17 @@ export default defineConfig({
     environment: "happy-dom",
     include: ["**/__tests__/**/*.{test,spec}.{ts,tsx}", "**/*.{test,spec}.{ts,tsx}"],
     coverage: {
-      reporter: ["text", "html"],
+      provider: "v8",
+      reporter: ["text", "html", "json-summary"],
+      reportsDirectory: "./coverage",
+      exclude: [
+        "node_modules/",
+        "tests/",
+        "dist/",
+        "vite.config.ts",
+        "src/main.ts",
+        "**/*.d.ts"
+      ],
     },
   },
 });
