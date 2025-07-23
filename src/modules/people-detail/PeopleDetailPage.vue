@@ -1,6 +1,11 @@
 <template>
   <div class="p-4">
-    <Card v-if="person" class="p-shadow-4">
+    <div class="text-center mt-4">
+      <router-link to="/" class="button-back">
+        Volver al inicio
+      </router-link>
+    </div>
+    <Card v-if="person" class="p-shadow-4 card-detail">
       <template #title>
         {{ person.name }}
       </template>
@@ -8,6 +13,10 @@
       <template #content>
         <div class="p-mb-3"><strong>Género:</strong>
           <Tag :value="person.gender" />
+        </div>
+
+        <div class="p-mb-3"><strong>Año de nacimiento:</strong>
+          {{ formatStarWarsDate(person.birth_year) }}
         </div>
 
         <div v-if="person.films.length">
@@ -45,7 +54,7 @@
           </ul>
         </div>
       </template>
-    </Card>
+    </Card>    
   </div>
 </template>
 
@@ -55,6 +64,7 @@ import { useRoute } from 'vue-router'
 import { usePeopleStore } from '@/store/peopleStore'
 import Card from 'primevue/card'
 import Tag from 'primevue/tag'
+import { formatStarWarsDate } from '@/helpers/dates'
 
 const route = useRoute()
 const peopleStore = usePeopleStore()
@@ -82,5 +92,24 @@ h3 {
 
 .link-styled:hover {
   text-decoration: underline;
+}
+
+.card-detail{
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.button-back{
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #10B981;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.button-back:hover {
+  background-color: #059669;
 }
 </style>

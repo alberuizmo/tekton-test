@@ -1,10 +1,12 @@
 <template>
   <div id="app">    
-    <router-view/>
-  </div>
+    <router-view/>    
+  </div><LoadingOverlay/>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import LoadingOverlay from '@/commons/LoadingOverlay.vue'
+</script>
 
 <style scoped lang="scss">
 #app {

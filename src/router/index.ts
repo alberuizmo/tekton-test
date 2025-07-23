@@ -1,15 +1,16 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import PeopleListPage from '@/modules/people-list/PeopleListPage.vue'
-import PeopleDetailPage from '@/modules/people-detail/PeopleDetailPage.vue'
-
-const routes = [
-  { path: '/', name: 'PeopleList', component: PeopleListPage },
-  { path: '/people/:id', name: 'PeopleDetail', component: PeopleDetailPage }
-]
+import { createRouter, createWebHistory } from "vue-router";
+import { PeopleRoutes } from "./routes";
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-})
+  routes: [
+    ...PeopleRoutes,
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: () => import("@/commons/NotFoundPage.vue"),
+    },
+  ],
+});
 
-export default router
+export default router;
