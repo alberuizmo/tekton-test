@@ -1,17 +1,34 @@
-import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
-import App from '@/App.vue'
+import { describe, it, expect, beforeEach } from "vitest";
+import { mount } from "@vue/test-utils";
+import App from "@/App.vue";
+import { createRouter, createMemoryHistory } from "vue-router";
+import { PeopleRoutes } from "@/router/routes";
+import ToastService from 'primevue/toastservice';
+import PrimeVue from "primevue/config";
 
-describe('App.vue', () => {
-  it('renders the App component', () => {
-    const wrapper = shallowMount(App)
-    expect(wrapper.exists()).toBe(true)
-  })
+describe("App.vue", async () => {
+  let wrapper: any;
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [...PeopleRoutes],
+  });
 
-  it('renders LoadingOverlay and Toast components', () => {
-    const wrapper = shallowMount(App)
+  beforeEach(async () => {
+    wrapper = mount(App, {
+      global: {
+        plugins: [router, ToastService, PrimeVue],
+      },
+    });
+  });
 
-    expect(wrapper.findComponent({ name: 'LoadingOverlay' }).exists()).toBe(true)
-    expect(wrapper.findComponent({ name: 'Toast' }).exists()).toBe(true)
-  })
-})
+  it("renders the App component", async () => {
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it("renders LoadingOverlay and Toast components", async () => {
+    expect(wrapper.findComponent({ name: "LoadingOverlay" }).exists()).toBe(
+      true
+    );
+    expect(wrapper.findComponent({ name: "Toast" }).exists()).toBe(true);
+  });
+});
