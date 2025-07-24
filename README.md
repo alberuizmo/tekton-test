@@ -1,5 +1,5 @@
 
-# Vue3 SOLID App
+# Tekton Test
 
 A technical challenge project built with **Vue 3**, **TypeScript**, **Pinia**, and **PrimeVue**. This application displays a list of Star Wars characters and allows users to view detailed information about each one. The architecture follows **SOLID principles** and includes unit testing with **Vitest**.
 
