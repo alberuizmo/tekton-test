@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import LoadingOverlay from '@/commons/LoadingOverlay.vue';
+import LoadingOverlay from '@/components/LoadingOverlay.vue';
 import { usePeopleStore } from '@/store/peopleStore';
 import { describe, it, expect } from 'vitest';
 

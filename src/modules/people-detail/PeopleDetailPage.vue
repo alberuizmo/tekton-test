@@ -65,6 +65,7 @@ import { usePeopleStore } from '@/store/peopleStore'
 import Card from 'primevue/card'
 import Tag from 'primevue/tag'
 import { formatStarWarsDate } from '@/helpers/dates'
+import { extractIdFromUrl } from '@/helpers/urls'
 import { useToast } from 'primevue/usetoast';
 
 const toast = useToast();
@@ -79,11 +80,6 @@ onMounted(async() => {
     toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar la persona', life: 3000 }); 
   }
 })
-
-function extractIdFromUrl(url: string, type: string): string {
-  const parts = url.split(`${type}/`)
-  return parts.length > 1 ? `${type} #${parts[1].replace('/', '')}` : url
-}
 </script>
 
 <style scoped>

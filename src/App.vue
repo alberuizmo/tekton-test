@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import LoadingOverlay from '@/commons/LoadingOverlay.vue'
+import LoadingOverlay from '@/components/LoadingOverlay.vue'
 import Toast from 'primevue/toast';
 </script>
 

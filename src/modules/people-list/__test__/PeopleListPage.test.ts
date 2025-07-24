@@ -1,7 +1,6 @@
 import { mount } from "@vue/test-utils";
 import PeopleListPage from "@/modules/people-list/PeopleListPage.vue";
 import { expect, it, describe, beforeEach, vi } from "vitest";
-import PeopleApi from "@/api/peopleApi";
 import type { Person } from "@/types/person";
 import { setActivePinia, createPinia } from "pinia";
 import { createRouter, createMemoryHistory } from "vue-router";
@@ -9,9 +8,10 @@ import { PeopleRoutes } from "@/router/routes";
 import PrimeVue from "primevue/config";
 import { formatStarWarsDate } from "@/helpers/dates";
 import ToastService from 'primevue/toastservice';
+import type { PeopleApiType } from '@/api/peopleApi';
+import { setPeopleApi } from '@/store/peopleStore';
 
-const mockResponse = [
-  {
+const mockResponse = {
     name: "Luke Skywalker",
     height: "172",
     mass: "77",
@@ -28,10 +28,14 @@ const mockResponse = [
     created: "",
     edited: "",
     url: "",
-  },
-] as Person[];
+  } as Person;
 
-vi.spyOn(PeopleApi.prototype, "fetchPeople").mockResolvedValue(mockResponse);
+const mockApi: PeopleApiType = {
+  fetchPeople: vi.fn().mockResolvedValue([mockResponse]),
+  fetchPersonById: vi.fn().mockResolvedValue(mockResponse),
+};
+
+setPeopleApi(mockApi);
 
 describe("PeopleListPage", () => {
   let wrapper: any;
@@ -55,11 +59,11 @@ describe("PeopleListPage", () => {
   });
 
   it("should display people data", async () => {
-    const dateOfBirth = formatStarWarsDate(mockResponse[0].birth_year);
+    const dateOfBirth = formatStarWarsDate(mockResponse.birth_year);
     await wrapper.vm.$nextTick();
-    expect(wrapper.text()).toContain(mockResponse[0].name);
+    expect(wrapper.text()).toContain(mockResponse.name);
     expect(wrapper.text()).toContain(dateOfBirth);
-    expect(wrapper.text()).toContain(mockResponse[0].gender);
+    expect(wrapper.text()).toContain(mockResponse.gender);
   });
 
   it("should navigate to detail page on button click", async () => {

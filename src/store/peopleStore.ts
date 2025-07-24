@@ -1,14 +1,18 @@
 import { defineStore } from "pinia";
-import PeopleApi from "@/api/peopleApi";
 import type { Person } from "@/types/person";
-
-const peopleAPi = new PeopleApi();
+import type { PeopleApiType } from "@/api/peopleApi"
 
 type statusTypes = {
   loading: boolean;
   people: Person[];
   selectedPerson: Person | null;
   actualId: number;
+};
+
+let peopleApi: PeopleApiType;
+
+export const setPeopleApi = (api: PeopleApiType) => {
+  peopleApi = api;
 };
 
 export const usePeopleStore = defineStore("people", {
@@ -24,7 +28,7 @@ export const usePeopleStore = defineStore("people", {
       if (this.people.length > 0) return;
       try {
         this.loading = true;
-        this.people = await peopleAPi.fetchPeople();
+        this.people = await peopleApi.fetchPeople();
       } catch {
         throw new Error("Failed to load people data");
       } finally {
@@ -36,7 +40,7 @@ export const usePeopleStore = defineStore("people", {
       this.selectedPerson = null;
       try {
         this.loading = true;
-        this.selectedPerson = await peopleAPi.fetchPersonById(id);
+        this.selectedPerson = await peopleApi.fetchPersonById(id);
         this.actualId = id;
       } catch {
         throw new Error("Failed to load persons data");

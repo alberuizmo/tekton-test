@@ -6,6 +6,10 @@ import './styles/main.scss'
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
 import ToastService from 'primevue/toastservice';
+import PeopleApi from '@/api/peopleApi';
+import { setPeopleApi } from '@/store/peopleStore';
+
+setPeopleApi(new PeopleApi());
 
 const app = createApp(App)
 

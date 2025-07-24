@@ -9,3 +9,8 @@ export default class PeopleApi {
     return http.get(`/people/${id}`);
   }
 }
+
+export interface PeopleApiType {
+  fetchPeople(): Promise<Person[]>;
+  fetchPersonById(id: number): Promise<Person>;
+}

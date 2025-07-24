@@ -1,13 +1,14 @@
 import { mount } from "@vue/test-utils";
 import PeopleDetailPage from "@/modules/people-detail/PeopleDetailPage.vue";
 import { expect, it, describe, beforeEach, vi } from "vitest";
-import PeopleApi from "@/api/peopleApi";
 import type { Person } from "@/types/person";
 import { setActivePinia, createPinia } from "pinia";
 import { createRouter, createMemoryHistory } from "vue-router";
 import { PeopleRoutes } from "@/router/routes";
 import PrimeVue from "primevue/config";
 import ToastService from 'primevue/toastservice';
+import type { PeopleApiType } from '@/api/peopleApi';
+import { setPeopleApi } from '@/store/peopleStore';
 
 const mockResponse = {
     name: "Luke Skywalker",
@@ -19,16 +20,21 @@ const mockResponse = {
     birth_year: "19BBY",
     gender: "male",
     homeworld: "Tatooine",
-    films: ["www.example/12.com", "www.example/13.com", "www.example/14.com"],
-    species: ["www.example/12.com", "www.example/13.com", "www.example/14.com"],
-    vehicles: ["www.example/12.com", "www.example/13.com", "www.example/14.com"],
-    starships: ["www.example/12.com", "www.example/13.com", "www.example/14.com"],
+    films: ["A New Hope", "The Empire Strikes Back", "Return of the Jedi"],
+    species: [],
+    vehicles: [],
+    starships: [],
     created: "",
     edited: "",
     url: "",
   } as Person;
 
-vi.spyOn(PeopleApi.prototype, "fetchPersonById").mockResolvedValue(mockResponse);
+const mockApi: PeopleApiType = {
+  fetchPeople: vi.fn().mockResolvedValue([mockResponse]),
+  fetchPersonById: vi.fn().mockResolvedValue(mockResponse),
+};
+
+setPeopleApi(mockApi);
 
 describe("PeopleDetailPage", async() => {
   let wrapper: any;

@@ -1,5 +1,5 @@
 import { mount } from "@vue/test-utils";
-import NotFoundPage from "@/commons/NotFoundPage.vue";
+import NotFoundPage from "@/components/NotFoundPage.vue";
 import { expect, it, describe, beforeEach } from "vitest";
 import PrimeVue from "primevue/config";
 
